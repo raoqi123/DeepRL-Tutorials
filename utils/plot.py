@@ -52,6 +52,7 @@ def load_data(indir, smooth, bin_size):
             f.readline()
             f.readline()
             for line in f:
+                line = line.replace('\x00','').rstrip()
                 tmp = line.split(',')
                 t_time = float(tmp[2])
                 tmp = [t_time, int(tmp[1]), float(tmp[0])]
@@ -101,7 +102,7 @@ def visdom_plot(viz, win, folder, game, name, num_steps, bin_size=100, smooth=1)
     plt.show()
     plt.draw()
 
-    
+
     image = np.fromstring(fig.canvas.tostring_rgb(), dtype=np.uint8, sep='')
     image = image.reshape(fig.canvas.get_width_height()[::-1] + (3, ))
     plt.close(fig)
